@@ -1,16 +1,137 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-	<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solar System Image Map</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: sans-serif;
+      background: #0a0a1a;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin-bottom: 12px;
+      color: #e0d8ff;
+    }
+    .map-container {
+      position: relative;
+      display: inline-block;
+    }
+    .map-container img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+    .tooltip {
+      display: none;
+      position: absolute;
+      background: rgba(10, 10, 26, 0.92);
+      border: 1px solid #7f77dd;
+      color: #e0d8ff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 10;
+    }
+    p.note {
+      font-size: 12px;
+      color: #888;
+      margin-top: 10px;
+    }
+  </style>
 </head>
-
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
+
+<h1>Solar System — Interactive Image Map</h1>
+
+<div class="map-container">
+  <img
+    src="solarsystem.jpg"
+    alt="Solar System"
+    usemap="#solarmap"
+    id="solarimg"
+  >
+  <div class="tooltip" id="tooltip"></div>
+</div>
+
+<map name="solarmap">
+  <!-- Sun: rectangle area covering the large body on the left -->
+  <area shape="rect"   coords="0,90,120,305"   href="sun.html"     alt="Sun"     title="Sun"     data-label="☀️ Sun">
+
+  <!-- Mercury: tiny, closest to sun -->
+  <area shape="circle" coords="145,195,8"       href="mercury.html" alt="Mercury" title="Mercury" data-label="Mercury">
+
+  <!-- Venus: slightly larger, next -->
+  <area shape="circle" coords="188,195,11"      href="venus.html"   alt="Venus"   title="Venus"   data-label="Venus">
+
+  <!-- Earth -->
+  <area shape="circle" coords="234,195,12"      href="earth.html"   alt="Earth"   title="Earth"   data-label="Earth">
+
+  <!-- Mars: slightly smaller than Earth -->
+  <area shape="circle" coords="278,195,9"       href="mars.html"    alt="Mars"    title="Mars"    data-label="Mars">
+
+  <!-- Jupiter: large gas giant -->
+  <area shape="circle" coords="351,195,38"      href="jupiter.html" alt="Jupiter" title="Jupiter" data-label="Jupiter">
+
+  <!-- Saturn (with rings) -->
+  <area shape="circle" coords="468,195,28"      href="saturn.html"  alt="Saturn"  title="Saturn"  data-label="Saturn">
+
+  <!-- Uranus -->
+  <area shape="circle" coords="562,195,18"      href="uranus.html"  alt="Uranus"  title="Uranus"  data-label="Uranus">
+
+  <!-- Neptune -->
+  <area shape="circle" coords="628,195,16"      href="neptune.html" alt="Neptune" title="Neptune" data-label="Neptune">
+
+  <!-- Pluto (dwarf planet) -->
+  <area shape="circle" coords="672,195,7"       href="pluto.html"   alt="Pluto"   title="Pluto"   data-label="Pluto (dwarf)">
+
+  <!-- Eris (dwarf planet) -->
+  <area shape="circle" coords="700,175,6"       href="eris.html"    alt="Eris"    title="Eris"    data-label="Eris (dwarf)">
+
+  <!-- Ceres (dwarf planet, in asteroid belt between Mars & Jupiter) -->
+  <area shape="circle" coords="312,195,5"       href="ceres.html"   alt="Ceres"   title="Ceres"   data-label="Ceres (dwarf)">
+
+  <!-- Haumea (dwarf planet, beyond Neptune) -->
+  <area shape="circle" coords="686,210,5"       href="haumea.html"  alt="Haumea"  title="Haumea"  data-label="Haumea (dwarf)">
+
+  <!-- Makemake (dwarf planet) -->
+  <area shape="circle" coords="710,195,5"       href="makemake.html" alt="Makemake" title="Makemake" data-label="Makemake (dwarf)">
+</map>
+
+<p class="note">Hover over any planet or the Sun to see its name. Click to visit its page.</p>
+
+<script>
+  const img = document.getElementById('solarimg');
+  const tooltip = document.getElementById('tooltip');
+  const areas = document.querySelectorAll('area');
+
+  areas.forEach(area => {
+    area.addEventListener('mouseover', function(e) {
+      tooltip.textContent = this.getAttribute('data-label');
+      tooltip.style.display = 'block';
+    });
+    area.addEventListener('mousemove', function(e) {
+      const rect = img.getBoundingClientRect();
+      const x = e.clientX - rect.left + 10;
+      const y = e.clientY - rect.top - 28;
+      tooltip.style.left = x + 'px';
+      tooltip.style.top = y + 'px';
+    });
+    area.addEventListener('mouseout', function() {
+      tooltip.style.display = 'none';
+    });
+  });
 </script>
 
 </body>
-
 </html>
